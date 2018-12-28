@@ -3,7 +3,7 @@ let ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
     
-    app.put('/genre', (req,res) => {
+    app.put('/api/genre', (req,res) => {
         // console.log('request body is :'+JSON.stringify(req.body));
         const genre = { name: req.body.name, description: req.body.description };
         db.collection('genres').insert(genre, (err, result)=>{
@@ -21,7 +21,7 @@ module.exports = function(app, db) {
         res.send("ok");
     });
 
-    app.get('/genres', (req,res) => {
+    app.get('/api/genres', (req,res) => {
         db.collection("genres").find({}).toArray(function(err, result) {
             if(err) {
                 console.log(err);
@@ -32,7 +32,7 @@ module.exports = function(app, db) {
         });
     });
 
-    app.put('/albums', (req, res) => {
+    app.put('/api/albums', (req, res) => {
         const album = getAlbumFromRequest(req);
 
         db.collection('albums').insert(album, (err, result) => {
@@ -49,7 +49,7 @@ module.exports = function(app, db) {
         res.send("album created successfully");
     });
 
-    app.get('/albums', (req, res) => {
+    app.get('/api/albums', (req, res) => {
         db.collection("albums").find({}).toArray(function(err, result) {
 
             if(err) { 
@@ -63,7 +63,7 @@ module.exports = function(app, db) {
         
     });
 
-    app.get('/albums/:id', async (req, res) => {
+    app.get('/api/albums/:id', async (req, res) => {
         let albumId = req.params.id;
         
         let album = await getAlbumById(albumId);
@@ -99,7 +99,7 @@ module.exports = function(app, db) {
         });
     })
 
-    app.post('/addSong/:id', (req, res) => {
+    app.post('/api/addSong/:id', (req, res) => {
         let albumId = req.params.id;
         let idQuery = { '_id' : new ObjectID(albumId)};
 
