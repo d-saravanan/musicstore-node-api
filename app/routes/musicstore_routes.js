@@ -65,10 +65,8 @@ module.exports = function(app, db) {
 
     app.get('/api/albums/:id', async (req, res) => {
         let albumId = req.params.id;
-        
-        let album = await getAlbumById(albumId);
-
         let idQuery = { '_id' : new ObjectID(albumId)};
+        
         db.collection("albums").findOne(idQuery, (err, result) => {
             
             if(err) {
